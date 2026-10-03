@@ -27,6 +27,7 @@ export type SemanticColor = {
   desc: string;
   active: boolean;
   note?: string;
+  tokenRef?: string;
 };
 
 export type ColorsDesignSystem = {

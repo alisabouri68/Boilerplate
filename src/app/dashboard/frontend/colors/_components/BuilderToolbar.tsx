@@ -1,6 +1,10 @@
 "use client";
 
-import { useHistory, useIO, useSaveStatus } from "@/lib/design-system/colors-hooks";
+import {
+  useHistory,
+  useIO,
+  useSaveStatus,
+} from "@/lib/design-system/colors-hooks";
 import { useToast } from "./Toast";
 import { useState } from "react";
 import ConfirmDialog from "./ConfirmDialog";
@@ -14,26 +18,21 @@ export default function BuilderToolbar({ onExportJson, onImportJson }: Props) {
   const toast = useToast();
   const [confirmReset, setConfirmReset] = useState(false);
 
-  const handleSave = async () => {
-    await save();
-    const s = useSaveStatus.getState?.();
-    // zustand does not expose getState by default on our hook; use toast directly
-    toast.push("ذخیره شد", "success");
-  };
-
   const label =
     status === "saving"
       ? "در حال ذخیره…"
       : status === "saved" && !dirty
-      ? "ذخیره شد ✓"
-      : status === "error"
-      ? "خطا"
-      : "ذخیره";
+        ? "ذخیره شد ✓"
+        : status === "error"
+          ? "خطا"
+          : "ذخیره";
 
   return (
     <div className="flex flex-wrap items-center justify-between gap-3">
       <div>
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">رنگ‌ها</h1>
+        <h1 className="text-2xl font-bold text-gray-900 dark:text-white">
+          رنگ‌ها
+        </h1>
         <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
           پالت رنگ‌ها و توکن‌های معنایی دیزاین سیستم
           {dirty && (
@@ -98,14 +97,6 @@ export default function BuilderToolbar({ onExportJson, onImportJson }: Props) {
           className="rounded-lg border border-red-200 px-3 py-1.5 text-sm text-red-600 hover:bg-red-50 dark:border-red-900 dark:text-red-400 dark:hover:bg-red-950"
         >
           بازنشانی
-        </button>
-
-        <button
-          onClick={handleSave}
-          disabled={status === "saving"}
-          className="rounded-lg bg-blue-600 px-4 py-1.5 text-sm font-semibold text-white shadow-sm transition hover:bg-blue-700 disabled:opacity-50"
-        >
-          {label}
         </button>
       </div>
 

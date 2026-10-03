@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 const sections = [
   { href: "/dashboard/frontend", label: "نمای کلی" },
+  { href: "/dashboard/frontend/theme", label: "تم" },
   { href: "/dashboard/frontend/colors", label: "رنگ‌ها" },
   { href: "/dashboard/frontend/typography", label: "تایپوگرافی" },
   { href: "/dashboard/frontend/spacing", label: "فاصله‌ها" },

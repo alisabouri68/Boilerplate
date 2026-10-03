@@ -1,0 +1,83 @@
+import { buildTheme, type Theme } from "./theme";
+
+export const POPCORN_THEME: Theme = {
+  id: "popcorn",
+  name: "پاپ‌کرن",
+  emoji: "🍿",
+  mode: "light",
+  builtin: true,
+  tokens: {
+    /* می‌توانی از پالت تغذیه کنی */
+    "primary":        { palette: "Amber", shade: "500", fallback: "#f59e0b" },
+    "primary-hover":  { palette: "Amber", shade: "600", fallback: "#d97706" },
+    "primary-active": { palette: "Amber", shade: "700", fallback: "#b45309" },
+    "border-default": { palette: "Amber", shade: "300", fallback: "#f0d9a8" },
+    "text-primary":   { palette: "Gray",  shade: "900", fallback: "#3b2f1e" },
+    "text-secondary": { palette: "Gray",  shade: "500", fallback: "#8a7355" },
+    "success":        { palette: "Emerald", shade: "600", fallback: "#16a34a" },
+    "danger":         { palette: "Red",   shade: "600", fallback: "#dc2626" },
+    "warning":        { palette: "Amber", shade: "600", fallback: "#ea580c" },
+
+    /* ثابت‌ها */
+    "bg-base":        { hex: "#fffbf0" },
+    "bg-surface":     { hex: "#ffffff" },
+    "bg-elevated":    { hex: "#ffffff" },
+    "bg-subtle":      { hex: "#fff5e1" },
+    "border-subtle":  { hex: "#f5e6c6" },
+    "border-strong":  { hex: "#e5b96a" },
+    "text-tertiary":  { hex: "#a89173" },
+    "text-inverse":   { hex: "#ffffff" },
+    "primary-focus":  { hex: "#f59e0b" },
+    "primary-disabled": { hex: "#fde68a" },
+    "success-bg":     { hex: "#16a34a1A" },
+    "success-border": { hex: "#16a34a55" },
+    "warning-bg":     { hex: "#ea580c1A" },
+    "warning-border": { hex: "#ea580c55" },
+    "danger-bg":      { hex: "#dc26261A" },
+    "danger-border":  { hex: "#dc262655" },
+    "info":           { hex: "#0891b2" },
+    "info-bg":        { hex: "#0891b21A" },
+    "info-border":    { hex: "#0891b255" },
+  },
+};
+
+export const NIGHT_WISH_THEME: Theme = {
+  id: "night-wish",
+  name: "نایت ویش",
+  emoji: "🌙",
+  mode: "dark",
+  builtin: true,
+  tokens: {
+    "primary":        { palette: "Purple", shade: "500", fallback: "#8b5cf6" },
+    "primary-hover":  { palette: "Purple", shade: "600", fallback: "#7c3aed" },
+    "primary-active": { palette: "Purple", shade: "700", fallback: "#6d28d9" },
+    "text-primary":   { palette: "Gray",   shade: "100", fallback: "#ede9fe" },
+    "success":        { palette: "Emerald",shade: "500", fallback: "#22c55e" },
+    "danger":         { palette: "Red",    shade: "500", fallback: "#ef4444" },
+    "warning":        { palette: "Amber",  shade: "500", fallback: "#f59e0b" },
+
+    "bg-base":        { hex: "#0a0420" },
+    "bg-surface":     { hex: "#150a35" },
+    "bg-elevated":    { hex: "#1e1046" },
+    "bg-subtle":      { hex: "#1a0f3d" },
+    "border-default": { hex: "#2d1b5e" },
+    "border-subtle":  { hex: "#241450" },
+    "border-strong":  { hex: "#4c2fa5" },
+    "text-secondary": { hex: "#a78bfa" },
+    "text-tertiary":  { hex: "#8b7bb8" },
+    "text-inverse":   { hex: "#0a0420" },
+    "primary-focus":  { hex: "#8b5cf6" },
+    "primary-disabled": { hex: "#3b2c6b" },
+    "success-bg":     { hex: "#22c55e1A" },
+    "success-border": { hex: "#22c55e55" },
+    "warning-bg":     { hex: "#f59e0b1A" },
+    "warning-border": { hex: "#f59e0b55" },
+    "danger-bg":      { hex: "#ef44441A" },
+    "danger-border":  { hex: "#ef444455" },
+    "info":           { hex: "#06b6d4" },
+    "info-bg":        { hex: "#06b6d41A" },
+    "info-border":    { hex: "#06b6d455" },
+  },
+};
+
+export const DEFAULT_THEMES: Theme[] = [POPCORN_THEME, NIGHT_WISH_THEME];

@@ -13,7 +13,7 @@ export const useSaveStatus = () =>
       autoSave: s.autoSave,
       save: s.save,
       setAutoSave: s.setAutoSave,
-    }))
+    })),
   );
 
 export const useHistory = () =>
@@ -23,7 +23,7 @@ export const useHistory = () =>
       redo: s.redo,
       canUndo: s.history.length > 0,
       canRedo: s.future.length > 0,
-    }))
+    })),
   );
 
 export const usePaletteActions = () =>
@@ -46,7 +46,7 @@ export const usePaletteActions = () =>
       reorderPalettes: s.reorderPalettes,
       bulkTogglePalettes: s.bulkTogglePalettes,
       bulkDeletePalettes: s.bulkDeletePalettes,
-    }))
+    })),
   );
 
 export const useSemanticActions = () =>
@@ -59,7 +59,8 @@ export const useSemanticActions = () =>
       toggle: s.toggleSemantic,
       bulkToggle: s.bulkToggleSemantic,
       bulkDelete: s.bulkDeleteSemantic,
-    }))
+      syncFromTheme: s.syncSemanticsFromTheme, // ← جدید
+    })),
   );
 
 export const useIO = () =>
@@ -68,7 +69,7 @@ export const useIO = () =>
       reset: s.reset,
       importSystem: s.importSystem,
       exportSystem: s.exportSystem,
-    }))
+    })),
   );
 
 export const useUI = () =>
@@ -89,7 +90,7 @@ export const useUI = () =>
       selectAllPalettes: s.selectAllPalettes,
       selectNonePalettes: s.selectNonePalettes,
       clearSelection: s.clearSelection,
-    }))
+    })),
   );
 
 /* ---------------- Auto Save ---------------- */
@@ -123,7 +124,11 @@ export function useShortcuts(handlers: {
       } else if (meta && e.key.toLowerCase() === "z" && !e.shiftKey) {
         e.preventDefault();
         handlers.onUndo?.();
-      } else if (meta && (e.key.toLowerCase() === "y" || (e.key.toLowerCase() === "z" && e.shiftKey))) {
+      } else if (
+        meta &&
+        (e.key.toLowerCase() === "y" ||
+          (e.key.toLowerCase() === "z" && e.shiftKey))
+      ) {
         e.preventDefault();
         handlers.onRedo?.();
       } else if (e.key === "Escape") {

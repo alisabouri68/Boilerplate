@@ -2,38 +2,75 @@
 export const uid = () =>
   Math.random().toString(36).slice(2, 10) + Date.now().toString(36).slice(-4);
 
-/* ---------- Hex ↔ RGB ↔ HSL ---------- */
-export function hexToRgb(hex: string) {
-  const h = hex.replace("#", "");
-  const full = h.length === 3 ? h.split("").map((c) => c + c).join("") : h;
-  const n = parseInt(full, 16);
-  return { r: (n >> 16) & 255, g: (n >> 8) & 255, b: n & 255 };
-}
+export function hexToRgb(hex: string): { r: number; g: number; b: number } | null {
+  const clean = hex.replace("#", "");
+  if (clean.length !== 6 && clean.length !== 3) return null;
 
+  const expanded =
+    clean.length === 3
+      ? clean.split("").map((c) => c + c).join("")
+      : clean;
+
+  const num = parseInt(expanded, 16);
+  if (Number.isNaN(num)) return null;
+
+  return {
+    r: (num >> 16) & 255,
+    g: (num >> 8) & 255,
+    b: num & 255,
+  };
+}
 export function rgbToHex(r: number, g: number, b: number) {
   const f = (n: number) => n.toString(16).padStart(2, "0");
   return `#${f(r)}${f(g)}${f(b)}`;
 }
 
-export function hexToHsl(hex: string) {
-  const { r, g, b } = hexToRgb(hex);
-  const rn = r / 255, gn = g / 255, bn = b / 255;
-  const max = Math.max(rn, gn, bn), min = Math.min(rn, gn, bn);
-  let h = 0, s = 0;
+export function hexToHsl(hex: string): {
+  h: number;
+  s: number;
+  l: number;
+} {
+  const rgb = hexToRgb(hex);
+  if (!rgb) {
+    // fallback امن
+    return { h: 0, s: 0, l: 0 };
+  }
+
+  const { r, g, b } = rgb;
+  const rn = r / 255;
+  const gn = g / 255;
+  const bn = b / 255;
+
+  const max = Math.max(rn, gn, bn);
+  const min = Math.min(rn, gn, bn);
+  let h = 0;
+  let s = 0;
   const l = (max + min) / 2;
+
   if (max !== min) {
     const d = max - min;
     s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+
     switch (max) {
-      case rn: h = (gn - bn) / d + (gn < bn ? 6 : 0); break;
-      case gn: h = (bn - rn) / d + 2; break;
-      case bn: h = (rn - gn) / d + 4; break;
+      case rn:
+        h = (gn - bn) / d + (gn < bn ? 6 : 0);
+        break;
+      case gn:
+        h = (bn - rn) / d + 2;
+        break;
+      case bn:
+        h = (rn - gn) / d + 4;
+        break;
     }
     h /= 6;
   }
-  return { h: Math.round(h * 360), s: Math.round(s * 100), l: Math.round(l * 100) };
-}
 
+  return {
+    h: Math.round(h * 360),
+    s: Math.round(s * 100),
+    l: Math.round(l * 100),
+  };
+}
 export function hslToHex(h: number, s: number, l: number) {
   const sn = s / 100, ln = l / 100;
   const c = (1 - Math.abs(2 * ln - 1)) * sn;
@@ -53,13 +90,15 @@ export function hslToHex(h: number, s: number, l: number) {
   );
 }
 
-/* ---------- Relative luminance (WCAG) ---------- */
-export function luminance(hex: string) {
-  const { r, g, b } = hexToRgb(hex);
+export function luminance(hex: string): number {
+  const rgb = hexToRgb(hex);
+  if (!rgb) return 0;
+  const { r, g, b } = rgb;
   const a = [r, g, b].map((v) => {
     const s = v / 255;
     return s <= 0.03928 ? s / 12.92 : Math.pow((s + 0.055) / 1.055, 2.4);
   });
+
   return 0.2126 * a[0] + 0.7152 * a[1] + 0.0722 * a[2];
 }
 

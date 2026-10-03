@@ -66,7 +66,11 @@ interface ColorsState {
   /* shade */
   addShade: (paletteId: string) => void;
   removeShade: (paletteId: string, shadeId: string) => void;
-  updateShade: (paletteId: string, shadeId: string, patch: Partial<ColorShade>) => void;
+  updateShade: (
+    paletteId: string,
+    shadeId: string,
+    patch: Partial<ColorShade>,
+  ) => void;
   duplicateShade: (paletteId: string, shadeId: string) => void;
   toggleShade: (paletteId: string, shadeId: string) => void;
   togglePinShade: (paletteId: string, shadeId: string) => void;
@@ -80,6 +84,14 @@ interface ColorsState {
   toggleSemantic: (id: string) => void;
   bulkToggleSemantic: (active: boolean) => void;
   bulkDeleteSemantic: () => void;
+  syncSemanticsFromTheme: (
+    updates: Array<{
+      id: string;
+      hex: string;
+      textHex: string;
+      tokenRef: string;
+    }>,
+  ) => void;
 
   /* history */
   undo: () => void;
@@ -137,7 +149,11 @@ export const useColorsStore = create<ColorsState>()(
         setSort: (v) => set({ sort: v }),
         setAutoSave: (v) => set({ autoSave: v }),
         clearSelection: () =>
-          set({ selectedPaletteIds: [], selectedShadeIds: [], selectedSemanticIds: [] }),
+          set({
+            selectedPaletteIds: [],
+            selectedShadeIds: [],
+            selectedSemanticIds: [],
+          }),
 
         /* ---------------- Selection ---------------- */
         toggleSelectPalette: (id) =>
@@ -196,7 +212,9 @@ export const useColorsStore = create<ColorsState>()(
             ...pushHistory(s),
             dirty: true,
             status: "idle",
-            palettes: s.palettes.map((p) => (p.id === id ? { ...p, ...patch } : p)),
+            palettes: s.palettes.map((p) =>
+              p.id === id ? { ...p, ...patch } : p,
+            ),
           })),
 
         duplicatePalette: (id) =>
@@ -221,7 +239,7 @@ export const useColorsStore = create<ColorsState>()(
             dirty: true,
             status: "idle",
             palettes: s.palettes.map((p) =>
-              p.id === id ? { ...p, active: !p.active } : p
+              p.id === id ? { ...p, active: !p.active } : p,
             ),
           })),
 
@@ -231,14 +249,14 @@ export const useColorsStore = create<ColorsState>()(
             dirty: true,
             status: "idle",
             palettes: s.palettes.map((p) =>
-              p.id === id ? { ...p, pinned: !p.pinned } : p
+              p.id === id ? { ...p, pinned: !p.pinned } : p,
             ),
           })),
 
         toggleCollapsePalette: (id) =>
           set((s) => ({
             palettes: s.palettes.map((p) =>
-              p.id === id ? { ...p, collapsed: !p.collapsed } : p
+              p.id === id ? { ...p, collapsed: !p.collapsed } : p,
             ),
           })),
 
@@ -252,7 +270,7 @@ export const useColorsStore = create<ColorsState>()(
               dirty: true,
               status: "idle",
               palettes: s.palettes.map((p) =>
-                ids.includes(p.id) ? { ...p, active } : p
+                ids.includes(p.id) ? { ...p, active } : p,
               ),
             };
           }),
@@ -262,7 +280,9 @@ export const useColorsStore = create<ColorsState>()(
             ...pushHistory(s),
             dirty: true,
             status: "idle",
-            palettes: s.palettes.filter((p) => !s.selectedPaletteIds.includes(p.id)),
+            palettes: s.palettes.filter(
+              (p) => !s.selectedPaletteIds.includes(p.id),
+            ),
             selectedPaletteIds: [],
           })),
 
@@ -296,7 +316,7 @@ export const useColorsStore = create<ColorsState>()(
                       },
                     ],
                   }
-                : p
+                : p,
             ),
           })),
 
@@ -308,7 +328,7 @@ export const useColorsStore = create<ColorsState>()(
             palettes: s.palettes.map((p) =>
               p.id === paletteId
                 ? { ...p, shades: p.shades.filter((sh) => sh.id !== shadeId) }
-                : p
+                : p,
             ),
           })),
 
@@ -322,10 +342,10 @@ export const useColorsStore = create<ColorsState>()(
                 ? {
                     ...p,
                     shades: p.shades.map((sh) =>
-                      sh.id === shadeId ? { ...sh, ...patch } : sh
+                      sh.id === shadeId ? { ...sh, ...patch } : sh,
                     ),
                   }
-                : p
+                : p,
             ),
           })),
 
@@ -361,10 +381,10 @@ export const useColorsStore = create<ColorsState>()(
                 ? {
                     ...p,
                     shades: p.shades.map((sh) =>
-                      sh.id === shadeId ? { ...sh, active: !sh.active } : sh
+                      sh.id === shadeId ? { ...sh, active: !sh.active } : sh,
                     ),
                   }
-                : p
+                : p,
             ),
           })),
 
@@ -378,10 +398,10 @@ export const useColorsStore = create<ColorsState>()(
                 ? {
                     ...p,
                     shades: p.shades.map((sh) =>
-                      sh.id === shadeId ? { ...sh, pinned: !sh.pinned } : sh
+                      sh.id === shadeId ? { ...sh, pinned: !sh.pinned } : sh,
                     ),
                   }
-                : p
+                : p,
             ),
           })),
 
@@ -392,8 +412,11 @@ export const useColorsStore = create<ColorsState>()(
             status: "idle",
             palettes: s.palettes.map((p) =>
               p.id === paletteId
-                ? { ...p, shades: generateShades(baseHex, p.name.toLowerCase()) }
-                : p
+                ? {
+                    ...p,
+                    shades: generateShades(baseHex, p.name.toLowerCase()),
+                  }
+                : p,
             ),
           })),
 
@@ -430,7 +453,7 @@ export const useColorsStore = create<ColorsState>()(
             dirty: true,
             status: "idle",
             semanticColors: s.semanticColors.map((c) =>
-              c.id === id ? { ...c, ...patch } : c
+              c.id === id ? { ...c, ...patch } : c,
             ),
           })),
 
@@ -446,7 +469,12 @@ export const useColorsStore = create<ColorsState>()(
             };
             const semanticColors = s.semanticColors.slice();
             semanticColors.splice(idx + 1, 0, clone);
-            return { ...pushHistory(s), dirty: true, status: "idle", semanticColors };
+            return {
+              ...pushHistory(s),
+              dirty: true,
+              status: "idle",
+              semanticColors,
+            };
           }),
 
         toggleSemantic: (id) =>
@@ -455,7 +483,7 @@ export const useColorsStore = create<ColorsState>()(
             dirty: true,
             status: "idle",
             semanticColors: s.semanticColors.map((c) =>
-              c.id === id ? { ...c, active: !c.active } : c
+              c.id === id ? { ...c, active: !c.active } : c,
             ),
           })),
 
@@ -469,7 +497,7 @@ export const useColorsStore = create<ColorsState>()(
               dirty: true,
               status: "idle",
               semanticColors: s.semanticColors.map((c) =>
-                ids.includes(c.id) ? { ...c, active } : c
+                ids.includes(c.id) ? { ...c, active } : c,
               ),
             };
           }),
@@ -480,11 +508,31 @@ export const useColorsStore = create<ColorsState>()(
             dirty: true,
             status: "idle",
             semanticColors: s.semanticColors.filter(
-              (c) => !s.selectedSemanticIds.includes(c.id)
+              (c) => !s.selectedSemanticIds.includes(c.id),
             ),
             selectedSemanticIds: [],
           })),
-
+        syncSemanticsFromTheme: (updates) =>
+          set((s) => {
+            if (!updates.length) return s;
+            const byId = new Map(updates.map((u) => [u.id, u]));
+            return {
+              ...pushHistory(s),
+              dirty: true,
+              status: "idle",
+              semanticColors: s.semanticColors.map((c) => {
+                const u = byId.get(c.id);
+                return u
+                  ? {
+                      ...c,
+                      hex: u.hex,
+                      textHex: u.textHex,
+                      tokenRef: u.tokenRef,
+                    }
+                  : c;
+              }),
+            };
+          }),
         /* ---------------- History ---------------- */
         undo: () =>
           set((s) => {
@@ -555,7 +603,10 @@ export const useColorsStore = create<ColorsState>()(
               }),
             });
             if (!res.ok) throw new Error("خطا در ذخیره‌سازی");
-            const data = (await res.json()) as { id: string; updatedAt: string };
+            const data = (await res.json()) as {
+              id: string;
+              updatedAt: string;
+            };
             set({
               id: data.id,
               updatedAt: data.updatedAt,
@@ -601,15 +652,15 @@ export const useColorsStore = create<ColorsState>()(
           updatedAt: s.updatedAt,
           autoSave: s.autoSave,
         }),
-      }
-    )
-  )
+      },
+    ),
+  ),
 );
 
 /* ---------------- Selectors ---------------- */
 export const selectPrimary = (s: ColorsState) =>
   s.semanticColors.find(
-    (c) => c.active && c.name.toLowerCase() === "primary"
+    (c) => c.active && c.name.toLowerCase() === "primary",
   ) ?? s.semanticColors.find((c) => c.active);
 
 export const selectActiveSemantics = (s: ColorsState) =>
@@ -631,14 +682,17 @@ export const selectFilteredPalettes = (s: ColorsState): ColorPalette[] => {
         p.shades.some(
           (sh) =>
             sh.token.toLowerCase().includes(q) ||
-            sh.hex.toLowerCase().includes(q)
-        )
+            sh.hex.toLowerCase().includes(q),
+        ),
     );
   }
 
-  if (s.sort === "name-asc") list = [...list].sort((a, b) => a.name.localeCompare(b.name));
-  else if (s.sort === "name-desc") list = [...list].sort((a, b) => b.name.localeCompare(a.name));
-  else if (s.sort === "shades-desc") list = [...list].sort((a, b) => b.shades.length - a.shades.length);
+  if (s.sort === "name-asc")
+    list = [...list].sort((a, b) => a.name.localeCompare(b.name));
+  else if (s.sort === "name-desc")
+    list = [...list].sort((a, b) => b.name.localeCompare(a.name));
+  else if (s.sort === "shades-desc")
+    list = [...list].sort((a, b) => b.shades.length - a.shades.length);
 
   return list;
 };
@@ -649,9 +703,16 @@ export const selectStats = (s: ColorsState) => {
   const totalShades = s.palettes.reduce((n, p) => n + p.shades.length, 0);
   const activeShades = s.palettes.reduce(
     (n, p) => n + p.shades.filter((sh) => sh.active).length,
-    0
+    0,
   );
   const totalSemantic = s.semanticColors.length;
   const activeSemantic = s.semanticColors.filter((c) => c.active).length;
-  return { totalPalettes, activePalettes, totalShades, activeShades, totalSemantic, activeSemantic };
+  return {
+    totalPalettes,
+    activePalettes,
+    totalShades,
+    activeShades,
+    totalSemantic,
+    activeSemantic,
+  };
 };

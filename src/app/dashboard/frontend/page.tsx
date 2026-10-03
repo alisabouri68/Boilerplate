@@ -6,9 +6,17 @@ import {
   HiCube,
   HiLightningBolt,
   HiPhotograph,
+  HiMoon,
 } from "react-icons/hi";
 
 const cards = [
+    {
+    href: "/dashboard/frontend/theme", // ← کارت جدید
+    title: "تم",
+    desc: "توکن‌های پایه، حالت روشن/تاریک و رنگ‌های معنایی",
+    icon: HiMoon,
+    color: "from-violet-500 to-indigo-500",
+  },
   {
     href: "/dashboard/frontend/colors",
     title: "سیستم رنگ",

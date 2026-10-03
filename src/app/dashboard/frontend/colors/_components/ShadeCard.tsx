@@ -3,18 +3,27 @@
 import { useState } from "react";
 import type { ColorShade } from "@/lib/design-system/types";
 import { usePaletteActions } from "@/lib/design-system/colors-hooks";
-import { contrastRatio, hexToHsl, wcagLabel } from "@/lib/design-system/colors-utils";
 import ToggleSwitch from "./ToggleSwitch";
 import { useToast } from "./Toast";
-
+import {
+  contrastRatio,
+  hexToHsl,
+  wcagLabel,
+  hexToRgb,
+} from "@/lib/design-system/colors-utils";
 type Props = {
   shade: ColorShade;
   paletteId: string;
 };
 
 export default function ShadeCard({ shade, paletteId }: Props) {
-  const { updateShade, removeShade, duplicateShade, toggleShade, togglePinShade } =
-    usePaletteActions();
+  const {
+    updateShade,
+    removeShade,
+    duplicateShade,
+    toggleShade,
+    togglePinShade,
+  } = usePaletteActions();
   const [menu, setMenu] = useState(false);
   const toast = useToast();
 
@@ -83,13 +92,17 @@ export default function ShadeCard({ shade, paletteId }: Props) {
         <div className="flex items-center gap-1">
           <input
             value={shade.shade}
-            onChange={(e) => updateShade(paletteId, shade.id, { shade: e.target.value })}
+            onChange={(e) =>
+              updateShade(paletteId, shade.id, { shade: e.target.value })
+            }
             className="w-11 rounded border border-gray-200 px-1.5 py-0.5 text-xs font-semibold dark:border-gray-700 dark:bg-gray-900 dark:text-white"
           />
           <input
             type="color"
             value={shade.hex}
-            onChange={(e) => updateShade(paletteId, shade.id, { hex: e.target.value })}
+            onChange={(e) =>
+              updateShade(paletteId, shade.id, { hex: e.target.value })
+            }
             className="h-6 w-8 cursor-pointer rounded border border-gray-200 dark:border-gray-700"
           />
           <button
@@ -103,12 +116,16 @@ export default function ShadeCard({ shade, paletteId }: Props) {
 
         <input
           value={shade.token}
-          onChange={(e) => updateShade(paletteId, shade.id, { token: e.target.value })}
+          onChange={(e) =>
+            updateShade(paletteId, shade.id, { token: e.target.value })
+          }
           className="w-full rounded border border-gray-200 px-1.5 py-0.5 text-[11px] text-gray-600 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-300"
         />
         <input
           value={shade.hex}
-          onChange={(e) => updateShade(paletteId, shade.id, { hex: e.target.value })}
+          onChange={(e) =>
+            updateShade(paletteId, shade.id, { hex: e.target.value })
+          }
           className="w-full rounded border border-gray-200 px-1.5 py-0.5 text-[11px] text-gray-500 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-400"
         />
 
@@ -116,17 +133,26 @@ export default function ShadeCard({ shade, paletteId }: Props) {
         {menu && (
           <div className="absolute end-2 top-full z-10 mt-1 w-40 overflow-hidden rounded-lg border border-gray-200 bg-white text-xs shadow-lg dark:border-gray-700 dark:bg-gray-900">
             <button
-              onClick={() => { copy(shade.hex, "hex"); setMenu(false); }}
+              onClick={() => {
+                copy(shade.hex, "hex");
+                setMenu(false);
+              }}
               className="block w-full px-3 py-1.5 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
             >
               کپی HEX
             </button>
             <button
               onClick={() => {
-                const { r, g, b } = { r: 0, g: 0, b: 0 };
                 const m = shade.hex.match(/[0-9a-f]{2}/gi) ?? [];
-                const rgb = `rgb(${parseInt(m[0], 16)}, ${parseInt(m[1], 16)}, ${parseInt(m[2], 16)})`;
-                copy(rgb, "rgb");
+                if (m.length < 3) {
+                  copy(shade.hex, "hex");
+                  setMenu(false);
+                  return;
+                }
+                const r = parseInt(m[0]!, 16);
+                const g = parseInt(m[1]!, 16);
+                const b = parseInt(m[2]!, 16);
+                copy(`rgb(${r}, ${g}, ${b})`, "rgb");
                 setMenu(false);
               }}
               className="block w-full px-3 py-1.5 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
@@ -134,19 +160,28 @@ export default function ShadeCard({ shade, paletteId }: Props) {
               کپی RGB
             </button>
             <button
-              onClick={() => { copy(`hsl(${h}, ${s}%, ${l}%)`, "hsl"); setMenu(false); }}
+              onClick={() => {
+                copy(`hsl(${h}, ${s}%, ${l}%)`, "hsl");
+                setMenu(false);
+              }}
               className="block w-full px-3 py-1.5 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
             >
               کپی HSL
             </button>
             <button
-              onClick={() => { duplicateShade(paletteId, shade.id); setMenu(false); }}
+              onClick={() => {
+                duplicateShade(paletteId, shade.id);
+                setMenu(false);
+              }}
               className="block w-full px-3 py-1.5 text-start hover:bg-gray-50 dark:hover:bg-gray-800"
             >
               کپی سایه
             </button>
             <button
-              onClick={() => { removeShade(paletteId, shade.id); setMenu(false); }}
+              onClick={() => {
+                removeShade(paletteId, shade.id);
+                setMenu(false);
+              }}
               className="block w-full px-3 py-1.5 text-start text-red-600 hover:bg-red-50 dark:hover:bg-red-950"
             >
               حذف
