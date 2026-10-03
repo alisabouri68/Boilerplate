@@ -1,3 +1,5 @@
+"use client";
+
 import { Progress, Spinner } from "flowbite-react";
 
 export default function ProgressPage() {

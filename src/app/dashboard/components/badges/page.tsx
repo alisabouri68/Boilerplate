@@ -1,3 +1,4 @@
+"use client";
 import { Badge } from "flowbite-react";
 import { HiCheck, HiX, HiClock } from "react-icons/hi";
 

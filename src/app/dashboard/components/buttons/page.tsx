@@ -1,9 +1,10 @@
-import { Button } from "flowbite-react";
+import { Button, ButtonGroup, Spinner } from "flowbite-react";
 import { HiPlus, HiTrash, HiDownload } from "react-icons/hi";
 
 export default function ButtonsPage() {
   return (
     <div className="space-y-8">
+      {/* رنگ‌ها */}
       <section className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <h2 className="mb-4 text-base font-bold text-gray-900 dark:text-white">رنگ‌ها</h2>
         <div className="flex flex-wrap gap-3">
@@ -13,6 +14,7 @@ export default function ButtonsPage() {
         </div>
       </section>
 
+      {/* سایزها */}
       <section className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <h2 className="mb-4 text-base font-bold text-gray-900 dark:text-white">سایزها</h2>
         <div className="flex flex-wrap items-center gap-3">
@@ -24,6 +26,7 @@ export default function ButtonsPage() {
         </div>
       </section>
 
+      {/* با آیکون */}
       <section className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <h2 className="mb-4 text-base font-bold text-gray-900 dark:text-white">با آیکون</h2>
         <div className="flex flex-wrap gap-3">
@@ -33,26 +36,37 @@ export default function ButtonsPage() {
         </div>
       </section>
 
+      {/* حالت‌ها */}
       <section className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <h2 className="mb-4 text-base font-bold text-gray-900 dark:text-white">حالت‌ها</h2>
-        <div className="flex flex-wrap gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <Button>عادی</Button>
           <Button disabled>غیرفعال</Button>
-          <Button isProcessing>در حال پردازش</Button>
+
+          {/* ✅ جایگزین isProcessing */}
+          <Button>
+            <Spinner aria-label="در حال پردازش" size="sm" light />
+            <span className="pl-3">در حال پردازش</span>
+          </Button>
+
           <Button pill>گرد</Button>
           <Button outline>Outline</Button>
         </div>
       </section>
 
+      {/* گروه دکمه */}
       <section className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <h2 className="mb-4 text-base font-bold text-gray-900 dark:text-white">گروه دکمه</h2>
-        <Button.Group>
+
+        {/* ✅ جایگزین Button.Group */}
+        <ButtonGroup>
           <Button color="gray">پروفایل</Button>
           <Button color="gray">تنظیمات</Button>
           <Button color="gray">خروج</Button>
-        </Button.Group>
+        </ButtonGroup>
       </section>
 
+      {/* دکمه سفارشی Tailwind */}
       <section className="rounded-2xl border border-gray-200 bg-white p-6 dark:border-gray-800 dark:bg-gray-900">
         <h2 className="mb-4 text-base font-bold text-gray-900 dark:text-white">دکمه سفارشی Tailwind</h2>
         <div className="flex flex-wrap gap-3">

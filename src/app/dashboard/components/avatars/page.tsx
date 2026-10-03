@@ -1,3 +1,5 @@
+"use client";
+
 import { Avatar, AvatarGroup } from "flowbite-react";
 
 export default function AvatarsPage() {

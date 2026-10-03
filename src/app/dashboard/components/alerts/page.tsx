@@ -1,3 +1,5 @@
+"use client";
+
 import { Alert } from "flowbite-react";
 import { HiInformationCircle, HiCheckCircle, HiExclamation, HiXCircle } from "react-icons/hi";
 

@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { Breadcrumb, BreadcrumbItem, Pagination, Navbar, NavbarBrand, NavbarCollapse, NavbarLink, NavbarToggle } from "flowbite-react";
 
