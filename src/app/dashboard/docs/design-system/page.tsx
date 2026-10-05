@@ -2,7 +2,7 @@ import Link from "next/link";
 import {
   HiColorSwatch,
   HiViewBoards,
-  HiViewGrid, 
+  HiViewGrid,
   HiSparkles,
   HiArrowLeft,
   HiCheckCircle,
@@ -38,7 +38,7 @@ const modules = [
     href: "#",
     title: "فاصله‌ها",
     desc: "Spacing scale و grid system",
-    icon: HiViewGrid, 
+    icon: HiViewGrid,
     color: "from-amber-500 to-orange-600",
     status: "به‌زودی",
     features: [],
@@ -57,13 +57,11 @@ const modules = [
 export default function DesignSystemOverview() {
   return (
     <div className="space-y-6">
-      {/* Hero */}
       <div className="relative overflow-hidden rounded-2xl bg-gradient-to-br from-violet-500 via-purple-600 to-fuchsia-600 p-8 text-white shadow-lg">
         <h2 className="text-2xl font-black">سیستم طراحی 🎨</h2>
         <p className="mt-2 max-w-2xl text-sm text-violet-50">
-          مجموعه‌ای از استانداردها، توکن‌ها و ابزارها برای ساخت رابط‌های
-          کاربری یکپارچه و زیبا. هر ماژول قابل استفاده، قابل ویرایش و قابل
-          خروجی گرفتن است.
+          مجموعه‌ای از استانداردها، توکن‌ها و ابزارها برای ساخت رابط‌های کاربری
+          یکپارچه و زیبا.
         </p>
         <Link
           href="/dashboard/docs/design-system/typography"
@@ -74,7 +72,6 @@ export default function DesignSystemOverview() {
         </Link>
       </div>
 
-      {/* ماژول‌ها */}
       <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
         {modules.map((m) => {
           const Icon = m.icon;
@@ -105,14 +102,12 @@ export default function DesignSystemOverview() {
                   {m.status}
                 </span>
               </div>
-
               <h3 className="mt-4 text-base font-bold text-gray-900 dark:text-white">
                 {m.title}
               </h3>
               <p className="mt-1 text-xs leading-relaxed text-gray-500 dark:text-gray-400">
                 {m.desc}
               </p>
-
               {m.features.length > 0 && (
                 <ul className="mt-3 space-y-1.5">
                   {m.features.map((f) => (
@@ -126,11 +121,10 @@ export default function DesignSystemOverview() {
                   ))}
                 </ul>
               )}
-
               {isReady && (
                 <div className="mt-4 inline-flex items-center gap-1 text-[11px] font-semibold text-violet-600 dark:text-violet-400">
                   مشاهده مستندات
-                  <HiArrowLeft className="h-3 w-3 transition-transform group-hover:-translate-x-1" />
+                  <HiArrowLeft className="h-3 w-3" />
                 </div>
               )}
             </Link>
@@ -138,7 +132,6 @@ export default function DesignSystemOverview() {
         })}
       </div>
 
-      {/* اصل طراحی */}
       <div className="rounded-2xl border border-gray-200 bg-white p-5 dark:border-gray-800 dark:bg-gray-900">
         <h3 className="mb-4 text-base font-bold text-gray-900 dark:text-white">
           اصول سیستم طراحی

@@ -1,12 +1,7 @@
+// src/app/layout.tsx
 import type { Metadata } from "next";
-import { Vazirmatn } from "next/font/google";
-import { ThemeModeScript } from "flowbite-react"; 
+import { RuntimeInitializer } from "@/components/providers/RuntimeInitializer";
 import "./globals.css";
-
-const vazirmatn = Vazirmatn({
-  subsets: ["arabic", "latin"],
-  display: "swap",
-});
 
 export const metadata: Metadata = {
   title: "داشبورد مدیریت | پنل پرو",
@@ -19,11 +14,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="fa" dir="rtl" suppressHydrationWarning>
-      <body
-        className={`${vazirmatn.className} bg-gray-50 text-gray-900 antialiased dark:bg-gray-900 dark:text-gray-100`}
-      >
-        <ThemeModeScript />
+    <html lang="fa" dir="rtl">
+      <body>
+        {/* فقط کامپوننت client اینجا mount می‌شه */}
+        <RuntimeInitializer />
+
         {children}
       </body>
     </html>

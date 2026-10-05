@@ -3,18 +3,19 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
+
 const sections = [
   { href: "/dashboard/docs", label: "نمای کلی" },
   { href: "/dashboard/docs/getting-started", label: "شروع سریع" },
   { href: "/dashboard/docs/installation", label: "نصب" },
   { href: "/dashboard/docs/project-structure", label: "ساختار پروژه" },
+  { href: "/dashboard/docs/design-system", label: "سیستم طراحی" }, // ← جدید
   { href: "/dashboard/docs/configuration", label: "تنظیمات" },
   { href: "/dashboard/docs/deployment", label: "استقرار" },
   { href: "/dashboard/docs/faq", label: "سوالات متداول" },
   { href: "/dashboard/docs/changelog", label: "تغییرات" },
   { href: "/dashboard/docs/contributing", label: "مشارکت" },
 ];
-
 export default function DocsLayout({
   children,
 }: {
