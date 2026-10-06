@@ -1,26 +1,29 @@
-// src/app/layout.tsx
-import type { Metadata } from "next";
-import { RuntimeInitializer } from "@/components/providers/RuntimeInitializer";
-import "./globals.css";
+import type { Metadata } from 'next'
+import './globals.css'
+import { ThemeProvider } from '@/components/providers/theme-provider'
 
 export const metadata: Metadata = {
-  title: "داشبورد مدیریت | پنل پرو",
-  description: "داشبورد حرفه‌ای ساخته‌شده با Next.js و Flowbite React",
-};
+  title: 'Boilerplate',
+  description: 'A production-ready Next.js starter',
+}
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactNode
 }) {
   return (
-    <html lang="fa" dir="rtl">
+    <html lang="en" suppressHydrationWarning>
       <body>
-        {/* فقط کامپوننت client اینجا mount می‌شه */}
-        <RuntimeInitializer />
-
-        {children}
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          {children}
+        </ThemeProvider>
       </body>
     </html>
-  );
+  )
 }
