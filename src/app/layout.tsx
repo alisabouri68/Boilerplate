@@ -1,16 +1,16 @@
-import type { Metadata } from 'next'
-import './globals.css'
-import { ThemeProvider } from '@/components/providers/theme-provider'
+import type { Metadata } from "next";
+import "./globals.css";
+import { ThemeProvider } from "@/components/providers/theme-provider";
 
 export const metadata: Metadata = {
-  title: 'Boilerplate',
-  description: 'A production-ready Next.js starter',
-}
+  title: "Design System Builder",
+  description: "Build design systems and manage projects",
+};
 
 export default function RootLayout({
   children,
 }: {
-  children: React.ReactNode
+  children: React.ReactNode;
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
@@ -25,5 +25,5 @@ export default function RootLayout({
         </ThemeProvider>
       </body>
     </html>
-  )
+  );
 }
