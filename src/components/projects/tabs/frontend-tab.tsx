@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useState } from "react";
 import Link from "next/link";
-import { Download, Loader2, Plus, Palette, Sparkles } from "lucide-react";
+import { Download, Loader2, Plus, Palette, Sparkles, Type } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import {
@@ -108,13 +108,13 @@ export function FrontendTab({ projectId, project }: FrontendTabProps) {
           values: t.values ?? {},
         }),
       );
-
-      setExportData({
-        name: dsData.name,
-        description: dsData.description,
-        themes,
-        palettes: dsData.palettes ?? [],
-      });
+setExportData({
+  name: dsData.name,
+  description: dsData.description,
+  themes,
+  palettes: dsData.palettes ?? [],
+  typography: dsData.typography,   // ← این خط اضافه
+});
       setExportOpen(true);
     } catch (err) {
       console.error(err);
@@ -180,7 +180,12 @@ export function FrontendTab({ projectId, project }: FrontendTabProps) {
               )}
             </Button>
           )}
-
+          <Button variant="outline" asChild>
+            <Link href={`/projects/${projectId}/typography`}>
+              <Type className="mr-2 h-4 w-4" />
+              Typography
+            </Link>
+          </Button>
           {!ds && (
             <Button onClick={() => setCreateOpen(true)}>
               <Plus className="mr-2 h-4 w-4" />
